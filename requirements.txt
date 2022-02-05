@@ -1,0 +1,4 @@
+praw~=7.5.0
+tweepy~=4.5.0
+Pillow~=9.0.0
+requests~=2.27.1
