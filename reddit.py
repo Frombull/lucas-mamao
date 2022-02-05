@@ -9,11 +9,18 @@ log.basicConfig(level=log.INFO,
 
 def start_reddit_section() -> praw.Reddit:
     log.info('Starting reddit section')
-    return praw.Reddit(
+
+    reddit = praw.Reddit(
         client_id=keys['client_id'],
         client_secret=keys['client_secret'],
-        user_agent="lucas-mamao",
+        user_agent="lucas-mamao"
     )
+
+    if not reddit.user.me():
+        log.critical('Reddit authentication error')
+        quit()
+
+    return reddit
 
 
 def is_valid_image(post: praw.Reddit.submission) -> bool:
@@ -28,10 +35,7 @@ def get_reddit_image(subreddit: str) -> str:
 
     log.info(f'Searching hot posts from r/{subreddit}')
 
-    images_found = 0
-    for post in target_sub.hot(limit=22):
+    for post in target_sub.hot(limit=12):
         if is_valid_image(post):
-            images_found += 1
-            if images_found == 1:
-                log.info('Image found')
-                return post.url.strip()
+            log.info('Image found')
+            return post.url.strip()

@@ -11,7 +11,7 @@ log.basicConfig(level=log.INFO,
                 format='[%(levelname)s] (%(asctime)s) - %(message)s',
                 datefmt='%H:%M:%S')
 
-IMAGE_PATH = '../[OLD]lucas-mamao/tmp/mamao_do_dia.jpg'  # Needs the first '/' to work with aws lambda
+IMAGE_PATH = 'tmp/mamao_do_dia.jpg'  # Needs the first '/' to work with aws lambda --> /tmp/
 
 
 def get_random_rgb() -> tuple:
@@ -33,7 +33,7 @@ def write_on_image(image_path: str):
     image_w, image_h = image_pil.size
 
     font_size = int(image_w / 6)
-    font_name = choice(listdir("../[OLD]lucas-mamao/fonts"))
+    font_name = choice(listdir("fonts"))
     font_path = f'fonts/{font_name}'
     font_pil = ImageFont.truetype(font=font_path, size=font_size)
     log.info(f'Writing on image using font: {font_name}')
