@@ -10,17 +10,11 @@ log.basicConfig(level=log.INFO,
 def start_reddit_section() -> praw.Reddit:
     log.info('Starting reddit section')
 
-    reddit = praw.Reddit(
+    return praw.Reddit(
         client_id=keys['client_id'],
         client_secret=keys['client_secret'],
         user_agent="lucas-mamao"
     )
-
-    if not reddit.user.me():
-        log.critical('Reddit authentication error')
-        quit()
-
-    return reddit
 
 
 def is_valid_image(post: praw.Reddit.submission) -> bool:
