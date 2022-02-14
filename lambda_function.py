@@ -67,8 +67,8 @@ def lambda_handler(event=None, context=None):
     image_url = get_reddit_image(subreddit='hmmm')
     save_image(url=image_url, image_path=IMAGE_PATH)
     write_on_image(image_path=IMAGE_PATH)
-    # post_image(image_path=IMAGE_PATH)
-    # log.info('Image posted successfully.')
+    post_image(image_path=IMAGE_PATH)
+    log.info('Image posted successfully.')
 
 
 lambda_handler()
