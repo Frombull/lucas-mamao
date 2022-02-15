@@ -11,7 +11,7 @@ log.basicConfig(level=log.INFO,
                 format='[%(levelname)s] (%(asctime)s) - %(message)s',
                 datefmt='%H:%M:%S')
 
-IMAGE_PATH = 'tmp/mamao_do_dia.jpg'  # Needs the first '/' to work with aws lambda --> /tmp/
+IMAGE_PATH = 'tmp/mamao_do_dia.jpg'  # Needs to start with '/' to work with aws lambda --> /tmp/
 
 
 def get_random_rgb() -> tuple:
@@ -23,21 +23,22 @@ def get_random_rgb() -> tuple:
 def save_image(url: str, image_path: str):
     r = get(url, headers=HEADERS)
 
+    log.info('Saving image')
     with open(image_path, 'wb') as img_raw:
         for chunk in r:
             img_raw.write(chunk)
 
 
 def write_on_image(image_path: str):
-    image_pil = Image.open(image_path)
+    image_pil = Image.open(image_path).convert('RGB')
     image_w, image_h = image_pil.size
 
     font_size = int(image_w / 6)
     font_name = choice(listdir("fonts"))
     font_path = f'fonts/{font_name}'
     font_pil = ImageFont.truetype(font=font_path, size=font_size)
-    log.info(f'Writing on image using font: {font_name}')
 
+    log.info(f'Writing on image using font: {font_name}')
     image_pil_edit = ImageDraw.Draw(image_pil)
     image_pil_edit.text(
         xy=(image_w / 2,

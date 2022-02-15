@@ -2,16 +2,15 @@ from PIL import Image, ImageDraw, ImageFont
 from os import listdir, remove
 from uuid import uuid4
 
-TEST_IMAGE_NAME = 'mamao.jpg'
+TEST_IMAGE = 'mamao.jpg'
+FONTS_FOLDER = 'test_fonts'
 IMAGES_FOLDER_IN = 'tmp/test_images_in'
 IMAGES_FOLDER_OUT = 'tmp/test_images_out'
-
-FONTS_FOLDER = 'fonts'
 
 
 def write_on_image(image_path: str, font: str):
     print('-' * 40)
-    print(f'Doing stuff on: {image_path}')
+    print(f'Writing on: {image_path}')
 
     image_name = image_path.split('/')[-1]
     image_pil = Image.open(image_path)
@@ -46,7 +45,7 @@ def write_on_image(image_path: str, font: str):
     random_str = str(uuid4()).split('-')[0]
     img_type = image_name.split('.')[1]
     final_name = f'{IMAGES_FOLDER_OUT}/{font_name_only + "-" + random_str}.{img_type}'
-    # final_name e.g. tmp/test_images_out/arial-07b39f44.jpg
+    # final name e.g. tmp/test_images_out/arial-07b39f44.jpg
 
     image_pil.save(final_name)
 
@@ -68,7 +67,7 @@ def main():
     delete_old_images(folder_path=IMAGES_FOLDER_OUT)
 
     for font in listdir(FONTS_FOLDER):
-        write_on_image(image_path=f'{IMAGES_FOLDER_IN}/{TEST_IMAGE_NAME}',
+        write_on_image(image_path=f'{IMAGES_FOLDER_IN}/{TEST_IMAGE}',
                        font=font)
 
 
