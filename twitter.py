@@ -20,8 +20,8 @@ def _start_twitter_section() -> tweepy.API:
 
 
 def post_image_to_twitter(image_path: str):
-    log.info('Posting image to twitter')
     api = _start_twitter_section()
+    log.info('Posting image to twitter')
     img_twitter = api.media_upload(image_path)
     api.update_status(status=None, media_ids=[img_twitter.media_id_string])
     log.info('Image posted successfully.')
