@@ -11,7 +11,7 @@ log.basicConfig(level=log.INFO,
                 format='[%(levelname)s] (%(asctime)s) - %(message)s',
                 datefmt='%H:%M:%S')
 
-IMAGE_PATH = 'tmp/mamao_do_dia.jpg'
+IMAGE_PATH = 'media/lucas-mamao.jpg'
 
 
 def random_rgb() -> tuple:
@@ -58,7 +58,7 @@ def write_on_image(image_path: str):
 def main():
     get_reddit_image(subreddit='hmmm', save_path=IMAGE_PATH)
     write_on_image(image_path=IMAGE_PATH)
-    post_image_to_twitter(image_path=IMAGE_PATH)
+    #post_image_to_twitter(image_path=IMAGE_PATH)
 
 
 if __name__ == '__main__':
