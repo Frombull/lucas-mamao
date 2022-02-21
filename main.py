@@ -58,7 +58,7 @@ def write_on_image(image_path: str):
 def main():
     get_reddit_image(subreddit='hmmm', save_path=IMAGE_PATH)
     write_on_image(image_path=IMAGE_PATH)
-    #post_image_to_twitter(image_path=IMAGE_PATH)
+    post_image_to_twitter(image_path=IMAGE_PATH)
 
 
 if __name__ == '__main__':
