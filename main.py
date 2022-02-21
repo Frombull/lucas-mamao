@@ -1,32 +1,23 @@
 import logging as log
-from twitter import post_image
-from reddit import get_reddit_image
-from PIL import Image, ImageDraw, ImageFont
 from os import listdir
 from random import randrange, choice
-from requests import get
-from constants import HEADERS
+
+from PIL import Image, ImageDraw, ImageFont
+
+from reddit import get_reddit_image
+from twitter import post_image_to_twitter
 
 log.basicConfig(level=log.INFO,
                 format='[%(levelname)s] (%(asctime)s) - %(message)s',
                 datefmt='%H:%M:%S')
 
-IMAGE_PATH = 'tmp/mamao_do_dia.jpg'  # Needs to start with '/' to work with aws lambda --> /tmp/
+IMAGE_PATH = 'tmp/mamao_do_dia.jpg'
 
 
-def get_random_rgb() -> tuple:
+def random_rgb() -> tuple:
     return (randrange(0, 256),
             randrange(0, 256),
             randrange(0, 256))
-
-
-def save_image(url: str, image_path: str):
-    r = get(url, headers=HEADERS)
-
-    log.info('Saving image')
-    with open(image_path, 'wb') as img_raw:
-        for chunk in r:
-            img_raw.write(chunk)
 
 
 def write_on_image(image_path: str):
@@ -45,7 +36,7 @@ def write_on_image(image_path: str):
             font_size / 1.1),
         text='Lucas',
         anchor='ms',
-        # fill=get_random_rgb(),
+        # fill=random_rgb(),
         font=font_pil,
         stroke_width=2,
         stroke_fill='#000000'
@@ -55,7 +46,7 @@ def write_on_image(image_path: str):
             image_h - (font_size / 4)),
         text='mamão',
         anchor='ms',
-        # fill=get_random_rgb(),
+        # fill=random_rgb(),
         font=font_pil,
         stroke_width=2,
         stroke_fill='#000000'
@@ -64,12 +55,11 @@ def write_on_image(image_path: str):
     image_pil.save(image_path)
 
 
-def lambda_handler(event=None, context=None):
-    image_url = get_reddit_image(subreddit='hmmm')
-    save_image(url=image_url, image_path=IMAGE_PATH)
+def main():
+    get_reddit_image(subreddit='hmmm', save_path=IMAGE_PATH)
     write_on_image(image_path=IMAGE_PATH)
-    post_image(image_path=IMAGE_PATH)
-    log.info('Image posted successfully.')
+    post_image_to_twitter(image_path=IMAGE_PATH)
 
 
-lambda_handler()
+if __name__ == '__main__':
+    main()
