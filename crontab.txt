@@ -1,3 +1,1 @@
-@reboot cd /home/pi/DiscordBot/ && sudo python3 Frombot.py
-
-0 8 * * * cd /home/pi/lucas-mamao/ && python3 lambda_function.py
+0 8 * * * cd /home/pi/lucas-mamao/ && python3 main.py
