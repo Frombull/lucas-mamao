@@ -1,1 +1,1 @@
-0 8 * * * cd /home/pi/lucas-mamao/ && python3 main.py
+0 12 * * * cd /home/pi/lucas-mamao/ && python3 main.py
